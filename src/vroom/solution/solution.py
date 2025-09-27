@@ -37,3 +37,26 @@ class Solution(_vroom.Solution):
             else:
                 frame.loc[frame[column] == NA_SUBSTITUTE, column] = pandas.NA
         return frame
+
+    def to_dict(self, geometry: bool = False) -> Dict[str, Any]:
+        """
+        Returns the solution as a dictionary.
+
+        Args:
+            geometry: Flag whether to include route geometry in the dictionary.
+
+        Returns:
+            The solution as a dictionary.
+        """
+        return json.loads(self._to_json(geometry))
+
+    def to_json(self, filename: str, geometry: bool = False):
+        """
+        Dumps the solution to a JSON file.
+
+        Args:
+            filename: Path to the output file.
+            geometry: Flag whether to include route geometry in the file.
+        """
+        with open(filename, "w") as f:
+            f.write(self._to_json(geometry))
